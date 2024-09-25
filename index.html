@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .widget {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+        .widget h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #333;
+        }
+        .widget .temp {
+            font-size: 48px;
+            margin: 10px 0;
+            color: #000;
+        }
+        .widget .condition {
+            font-size: 18px;
+            margin: 0;
+            color: #666;
+        }
+    </style>
+    <title>Weather Widget</title>
+</head>
+<body>
+
+<div class="widget">
+    <h1>Warsaw</h1>
+    <div class="temp" id="temp">-°C</div>
+    <div class="condition" id="condition">-</div>
+</div>
+
+<script>
+    // Вставь сюда свой API-ключ
+    const apiKey = 'b0082fd8b1181df78b1b27f881570064';  // Замени на свой API-ключ
+    const city = 'Warsaw';  // Указание города
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=ru`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const temp = Math.round(data.main.temp);
+            const condition = data.weather[0].description;
+
+            document.getElementById('temp').textContent = `${temp}°C`;
+            document.getElementById('condition').textContent = condition;
+        })
+        .catch(error => {
+            console.error('Error fetching the weather data:', error);
+        });
+</script>
+
+</body>
+</html>
